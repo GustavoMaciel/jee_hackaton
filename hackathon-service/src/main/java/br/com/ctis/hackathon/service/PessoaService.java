@@ -9,7 +9,7 @@ import java.util.List;
 @Local
 public interface PessoaService extends GenericService<Long, Pessoa> {
     /**
-     * Listar todos as Pessoas cadastradas no sistema
+     * Listar todas as Pessoas cadastradas no sistema
      *
      * @return {@link List <Pessoa>} - Lista com Pessoas cadastradas
      */
