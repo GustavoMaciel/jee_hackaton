@@ -1,0 +1,13 @@
+/target/
+/.classpath
+/.settings/
+/.idea/
+/.project/
+*.iml
+/bin/
+*/log4j.properties
+*.orig
+*.swp
+*.project
+*.bak
+*.log

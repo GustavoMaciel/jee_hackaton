@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>br.com.ctis</groupId>
+	<artifactId>hackathon</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>hackathon</name>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>8</java.version>
+		<version.dependency.javaee>7.0</version.dependency.javaee>
+		<version.surefire.plugin>2.22.0</version.surefire.plugin>
+		<version.plugin.compiler>3.8.0</version.plugin.compiler>
+		<version.plugin.war>3.2.2</version.plugin.war>
+		<version.junit>4.12</version.junit>
+		<version.mockito>1.10.19</version.mockito>
+		<target>default</target>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${version.plugin.compiler}</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<debug>true</debug>
+					<optimize>true</optimize>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${version.surefire.plugin}</version>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>${version.dependency.javaee}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${version.junit}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>${version.mockito}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>1.4.196</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/log4j/log4j -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
+	</dependencies>
+	<modules>
+		<module>hackathon-persistence</module>
+		<module>hackathon-service</module>
+		<module>hackathon-rest</module>
+		<module>hackathon-ear</module>
+	</modules>
+</project>

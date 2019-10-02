@@ -1,0 +1,11 @@
+/target/
+/.classpath
+/.settings/
+/bin/
+/.idea/
+/.iml
+*.orig
+*.swp
+*.project
+build.xml
+.tern-project

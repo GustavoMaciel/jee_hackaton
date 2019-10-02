@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>br.com.ctis</groupId>
+        <artifactId>hackathon</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+	<artifactId>hackathon-service</artifactId>
+	<packaging>ejb</packaging>
+	<name>hackathon-service (Negócio)</name>
+	<description>Módulo responsável pela regra de negócio da aplicação.</description>
+
+	<properties>
+		<jacoco.version>0.7.5.201505241946</jacoco.version>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-ejb-plugin</artifactId>
+				<version>3.0.1</version>
+				<configuration>
+					<ejbVersion>3.2</ejbVersion>
+					<generateClient>true</generateClient>
+					<clientIncludes>
+						<clientInclude>br/com/ctis/hackathon/service/*</clientInclude>
+						<clientInclude>br/com/ctis/hackathon/exception/**</clientInclude>
+						<clientInclude>br/com/ctis/hackathon/vo/**</clientInclude>
+						<clientInclude>br/com/ctis/hackathon/dto/**</clientInclude>
+					</clientIncludes>
+					<clientExcludes>
+						<clientExclude>br/com/ctis/hackathon/service/impl/*</clientExclude>
+					</clientExcludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco.version}</version>
+				<executions>
+					<execution>
+						<id>prepare-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>post-unit-test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+							<!-- <goal>check</goal> -->
+						</goals>
+						<configuration>
+							<!-- Sets the path to the file which contains the execution data. -->
+							<dataFile>target/jacoco.exec</dataFile>
+							<!-- Sets the output directory for the code coverage report. -->
+							<outputDirectory>target/jacoco</outputDirectory>
+							<rules>
+								<rule implementation="org.jacoco.maven.RuleConfiguration">
+									<element>BUNDLE</element>
+									<limits>
+										<limit implementation="org.jacoco.report.check.Limit">
+											<counter>INSTRUCTION</counter>
+											<value>COVEREDRATIO</value>
+											<minimum>0.0</minimum>
+										</limit>
+									</limits>
+								</rule>
+							</rules>
+							<includes>
+								<include>**/*impl/*</include>
+							</includes>
+						</configuration>
+					</execution>
+				</executions>
+				<configuration>
+					<systemPropertyVariables>
+						<jacoco-agent.destfile>target/jacoco.exec</jacoco-agent.destfile>
+					</systemPropertyVariables>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>br.com.ctis</groupId>
+			<artifactId>hackathon-persistence</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>6.0.12.Final</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>

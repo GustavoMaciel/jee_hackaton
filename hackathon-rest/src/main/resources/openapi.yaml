@@ -1,0 +1,12 @@
+resourcePackages:
+- br.com.ctis.hackathon.endpoint
+prettyPrint: true
+cacheTTL: 0
+openAPI:
+  servers:
+     - url: http://localhost:8080/hackathon-backend/api/v1/
+       description: Servidor dedesenvolvimento (Contexto EAR)
+  info:
+    version: '1.0.0'
+    title: Hackton API Rest
+    description: 'Recursos expostos pelo Projeto'
