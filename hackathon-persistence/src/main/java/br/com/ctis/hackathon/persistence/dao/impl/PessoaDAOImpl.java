@@ -5,11 +5,13 @@ import br.com.ctis.hackathon.exception.RegistroNaoEncontradoException;
 import br.com.ctis.hackathon.persistence.dao.PessoaDAO;
 import br.com.ctis.hackathon.persistence.model.Pessoa;
 
+import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
+@Stateless
 public class PessoaDAOImpl extends GenericDAOImpl<Long, Pessoa> implements PessoaDAO {
 
     @Override

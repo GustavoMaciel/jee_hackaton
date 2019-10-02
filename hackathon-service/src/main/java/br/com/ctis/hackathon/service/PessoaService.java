@@ -3,8 +3,10 @@ package br.com.ctis.hackathon.service;
 import br.com.ctis.hackathon.dto.PessoaDTO;
 import br.com.ctis.hackathon.persistence.model.Pessoa;
 
+import javax.ejb.Local;
 import java.util.List;
 
+@Local
 public interface PessoaService extends GenericService<Long, Pessoa> {
     /**
      * Listar todos as Pessoas cadastradas no sistema
