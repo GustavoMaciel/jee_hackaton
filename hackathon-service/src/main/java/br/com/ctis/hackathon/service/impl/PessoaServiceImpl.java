@@ -7,7 +7,9 @@ import br.com.ctis.hackathon.exception.NegocioException;
 import br.com.ctis.hackathon.exception.RegistroNaoEncontradoException;
 import br.com.ctis.hackathon.persistence.dao.PessoaDAO;
 import br.com.ctis.hackathon.persistence.model.Pessoa;
+import br.com.ctis.hackathon.persistence.model.Telefone;
 import br.com.ctis.hackathon.service.PessoaService;
+import br.com.ctis.hackathon.service.TelefoneService;
 import br.com.ctis.hackathon.util.MensagemUtil;
 
 import javax.ejb.EJB;
@@ -22,6 +24,8 @@ public class PessoaServiceImpl extends GenericServiceImpl<Long, Pessoa> implemen
 
     @EJB
     private PessoaDAO pessoaDAO;
+    @EJB
+    private TelefoneService telefoneService;
 
     @Override
     public List<Pessoa> listar() {
@@ -34,7 +38,12 @@ public class PessoaServiceImpl extends GenericServiceImpl<Long, Pessoa> implemen
 
     @Override
     public void cadastrar(PessoaDTO pessoaDTO) {
-        this.pessoaDAO.gravar(mapper(pessoaDTO));
+        Pessoa pessoa = mapper(pessoaDTO);
+        this.pessoaDAO.gravar(pessoa);
+        for(Telefone i: pessoaDTO.getTelefones()){
+            i.setPessoa(pessoa);
+            this.telefoneService.cadastrar(i);
+        }
     }
 
     @Override
