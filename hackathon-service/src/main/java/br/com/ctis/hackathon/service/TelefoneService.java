@@ -30,5 +30,5 @@ public interface TelefoneService {
      *
      * @return {@link Telefone} - Representa um Telefone cadastrado no sistema
      */
-    Telefone buscarPessoaPorId(Long id);
+    Telefone buscarTelefonePorId(Long id);
 }
