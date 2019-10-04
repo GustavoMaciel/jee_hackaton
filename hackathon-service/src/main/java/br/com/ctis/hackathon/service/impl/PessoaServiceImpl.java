@@ -24,8 +24,6 @@ public class PessoaServiceImpl extends GenericServiceImpl<Long, Pessoa> implemen
 
     @EJB
     private PessoaDAO pessoaDAO;
-    @EJB
-    private TelefoneService telefoneService;
 
     @Override
     public List<Pessoa> listar() {
@@ -38,12 +36,8 @@ public class PessoaServiceImpl extends GenericServiceImpl<Long, Pessoa> implemen
 
     @Override
     public void cadastrar(PessoaDTO pessoaDTO) {
-        Pessoa pessoa = mapper(pessoaDTO);
+        Pessoa pessoa = toModel(pessoaDTO);
         this.pessoaDAO.gravar(pessoa);
-        for(Telefone i: pessoaDTO.getTelefones()){
-            i.setPessoa(pessoa);
-            this.telefoneService.cadastrar(i);
-        }
     }
 
     @Override
@@ -64,7 +58,7 @@ public class PessoaServiceImpl extends GenericServiceImpl<Long, Pessoa> implemen
      *
      * @return {@link Pessoa} - Entidade Pessoa
      */
-    private Pessoa mapper(PessoaDTO pessoaDTO) {
+    private Pessoa toModel(PessoaDTO pessoaDTO) {
 
         Pessoa pessoa = new Pessoa();
         pessoa.setCpf(pessoaDTO.getCpf());
