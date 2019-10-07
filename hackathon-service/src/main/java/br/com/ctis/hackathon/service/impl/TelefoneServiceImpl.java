@@ -6,6 +6,7 @@ import br.com.ctis.hackathon.exception.DAOException;
 import br.com.ctis.hackathon.exception.NegocioException;
 import br.com.ctis.hackathon.exception.RegistroNaoEncontradoException;
 import br.com.ctis.hackathon.persistence.dao.TelefoneDAO;
+import br.com.ctis.hackathon.persistence.model.Pessoa;
 import br.com.ctis.hackathon.persistence.model.Telefone;
 import br.com.ctis.hackathon.service.TelefoneService;
 import br.com.ctis.hackathon.util.MensagemUtil;
@@ -32,8 +33,8 @@ public class TelefoneServiceImpl extends GenericServiceImpl<Long, Telefone> impl
     }
 
     @Override
-    public void cadastrar(TelefoneDTO telefone) {
-        this.telefoneDAO.gravar(toModel(telefone));
+    public Telefone cadastrar(TelefoneDTO telefone, Pessoa p) {
+        return this.telefoneDAO.gravar(toModel(telefone, p));
     }
 
     @Override
@@ -47,11 +48,13 @@ public class TelefoneServiceImpl extends GenericServiceImpl<Long, Telefone> impl
         }
     }
 
-    private Telefone toModel(TelefoneDTO t){
+    private Telefone toModel(TelefoneDTO t, Pessoa p){
         Telefone i = new Telefone();
         i.setCodigoPais(t.getCodigoPais());
         i.setDdd(t.getDdd());
         i.setNumero(t.getNumero());
+        i.setPessoa(p);
+        i.setPessoaId(p.getId());
         return i;
     }
 }

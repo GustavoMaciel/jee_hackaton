@@ -2,6 +2,7 @@ package br.com.ctis.hackathon.service;
 
 import br.com.ctis.hackathon.dto.PessoaDTO;
 import br.com.ctis.hackathon.dto.TelefoneDTO;
+import br.com.ctis.hackathon.persistence.model.Pessoa;
 import br.com.ctis.hackathon.persistence.model.Telefone;
 
 import javax.ejb.Local;
@@ -22,7 +23,7 @@ public interface TelefoneService {
      *
      * @param telefone - Telefone a ser cadastrado
      */
-    void cadastrar(TelefoneDTO telefone);
+    Telefone cadastrar(TelefoneDTO telefone, Pessoa p);
 
     /**
      * Recuperar Telefone pelo Id

@@ -33,7 +33,13 @@ public class PessoaEndPointImpl implements PessoaEndPoint {
     public Response cadastrar(PessoaDTO pessoaDTO) {
         Pessoa pessoa = pessoaService.cadastrar(pessoaDTO);
         for(TelefoneDTO i: pessoaDTO.getTelefones()){
-            this.telefoneService.cadastrar(i);
+            try {
+                this.telefoneService.cadastrar(i, pessoa);
+            } catch (Exception e){
+                return Response.status(Response.Status.BAD_REQUEST)
+                        .entity(new MensagemRetornoDTO("Erro ao cadastrar telefone: " + i.getDdd()+i.getNumero()))
+                        .build();
+            }
         }
         return Response.status(Response.Status.CREATED)
                 .entity(new MensagemRetornoDTO("Pessoa cadastrada com sucesso!"))

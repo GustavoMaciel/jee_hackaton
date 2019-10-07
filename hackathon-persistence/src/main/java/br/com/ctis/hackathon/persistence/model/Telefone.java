@@ -25,7 +25,7 @@ public class Telefone extends EntidadeBase<Long> {
     @JoinColumn(name = "pessoaId")
     private Pessoa pessoa;
 
-    @Column(name = "pessoaId", updatable = false, nullable = false)
+    @Column(name = "pessoaId", updatable = false, nullable = false, insertable = false)
     private Long pessoaId;
 
     @Override
