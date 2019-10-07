@@ -9,6 +9,9 @@ import java.util.List;
 
 public class PessoaDTO extends BaseDTO {
 
+    @Schema(description = "Id da pessoa", required = false)
+    private Long id;
+
     @NotNull(message = "Nome não pode ser nulo")
     @NotBlank(message = "Nome não pode ser vazio")
     @Length(max = 50, message = "Nome deve possuir até 50 caracteres")
@@ -36,6 +39,10 @@ public class PessoaDTO extends BaseDTO {
     @Schema(description = "Lista de telefones da pessoa", required = false)
     private List<TelefoneDTO> telefones;
 
+    public Long getId() {
+        return id;
+    }
+
     public String getSobrenome() {
         return sobrenome;
     }
@@ -54,6 +61,10 @@ public class PessoaDTO extends BaseDTO {
 
     public List<TelefoneDTO> getTelefones() {
         return telefones;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setSobrenome(String sobrenome) {

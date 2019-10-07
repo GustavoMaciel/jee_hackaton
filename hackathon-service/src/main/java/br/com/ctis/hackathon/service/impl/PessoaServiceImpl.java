@@ -60,6 +60,9 @@ public class PessoaServiceImpl extends GenericServiceImpl<Long, Pessoa> implemen
     private Pessoa toModel(PessoaDTO pessoaDTO) {
 
         Pessoa pessoa = new Pessoa();
+        if(pessoaDTO.getId() != null) {
+            pessoa.setId(pessoaDTO.getId());
+        }
         pessoa.setCpf(pessoaDTO.getCpf());
         pessoa.setNome(pessoaDTO.getNome());
         pessoa.setSobrenome(pessoaDTO.getSobrenome());

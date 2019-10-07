@@ -48,6 +48,11 @@ public class TelefoneServiceImpl extends GenericServiceImpl<Long, Telefone> impl
         }
     }
 
+    @Override
+    public void deletar(Telefone telefone) {
+        telefoneDAO.excluir(telefone);
+    }
+
     private Telefone toModel(TelefoneDTO t, Pessoa p){
         Telefone i = new Telefone();
         i.setCodigoPais(t.getCodigoPais());

@@ -29,21 +29,51 @@ public class PessoaEndPointImpl implements PessoaEndPoint {
         return Response.status(Response.Status.OK).entity(listaDeDTOS).build();
     }
 
-    @Override
-    public Response cadastrar(PessoaDTO pessoaDTO) {
+    private Response templatePostPut(PessoaDTO pessoaDTO, String action){
+        StringBuilder stringBuilder = new StringBuilder();
         Pessoa pessoa = pessoaService.cadastrar(pessoaDTO);
         for(TelefoneDTO i: pessoaDTO.getTelefones()){
             try {
                 this.telefoneService.cadastrar(i, pessoa);
             } catch (Exception e){
-                return Response.status(Response.Status.BAD_REQUEST)
-                        .entity(new MensagemRetornoDTO("Erro ao cadastrar telefone: " + i.getDdd()+i.getNumero()))
-                        .build();
+                stringBuilder.append("\nErro ao cadastrar telefone: ").append(i.getCodigoPais()).append(i.getDdd())
+                        .append(i.getNumero());
             }
         }
-        return Response.status(Response.Status.CREATED)
-                .entity(new MensagemRetornoDTO("Pessoa cadastrada com sucesso!"))
-                .build();
+
+        String finalMessage = "Pessoa " + action + " com ";
+        if(stringBuilder.length() >= 1){
+            finalMessage += "os seguintes erros:" + stringBuilder.toString();
+        } else {
+            finalMessage += "sucesso!";
+        }
+        return Response.status(Response.Status.CREATED).entity(new MensagemRetornoDTO(finalMessage)).build();
+    }
+
+    @Override
+    public Response cadastrar(PessoaDTO pessoaDTO) {
+        return this.templatePostPut(pessoaDTO, "cadastrada");
+    }
+
+    private void telefoneChangesDealer(PessoaDTO pessoaDTO){
+        for(Telefone i: this.telefoneService.listarTelefonesDePessoaComId(pessoaDTO.getId())) {
+            boolean deletarAtual = true;
+            for(TelefoneDTO j: pessoaDTO.getTelefones()){
+                if (i.getCodigoPais().equals(j.getCodigoPais()) && i.getDdd().equals(j.getDdd()) && i.getNumero().equals(j.getNumero())){
+                    deletarAtual = false;
+                    break;
+                }
+            }
+            if (deletarAtual){
+                telefoneService.deletar(telefoneService.buscarTelefonePorId(i.getId()));
+            }
+        }
+    }
+
+    @Override
+    public Response atualizar(PessoaDTO pessoaDTO) {
+        this.telefoneChangesDealer(pessoaDTO);
+        return this.templatePostPut(pessoaDTO, "atualizada");
     }
 
     @Override
@@ -55,6 +85,7 @@ public class PessoaEndPointImpl implements PessoaEndPoint {
 
     private PessoaDTO toDTO(Pessoa p){
         PessoaDTO dto = new PessoaDTO();
+        dto.setId(p.getId());
         dto.setCpf(p.getCpf());
         dto.setEmail(p.getEmail());
         dto.setNome(p.getNome());

@@ -33,4 +33,12 @@ public interface TelefoneService {
      * @return {@link Telefone} - Representa um Telefone cadastrado no sistema
      */
     Telefone buscarTelefonePorId(Long id);
+
+    /**
+     * Deletar um Telefone
+     *
+     * @param telefone - Telefone à ser deletado
+     * @return {@link Telefone} - Representa o Telefone deletado do sistema
+     */
+    void deletar(Telefone telefone);
 }

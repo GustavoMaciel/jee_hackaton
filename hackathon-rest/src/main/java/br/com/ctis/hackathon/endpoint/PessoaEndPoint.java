@@ -48,6 +48,23 @@ public interface PessoaEndPoint {
             content = @Content(schema = @Schema(implementation = PessoaDTO.class))) @Valid PessoaDTO pessoaDTO
     );
 
+    @PUT
+    @Produces("application/json")
+    @Consumes("application/json")
+    @Operation(description = "Recurso para atualizar uma Pessoa do sistema",
+            summary = "Atualizar Pessoa",
+            responses = {
+                    @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json")),
+                    @ApiResponse(responseCode = "400", description = "Bad Request"),
+                    @ApiResponse(responseCode = "404", description = "Not found"),
+                    @ApiResponse(responseCode = "500", description = "Internal Server Error")
+            }
+    )
+    Response atualizar(@RequestBody(
+            description = "Objeto Pessoa que será atualizado",
+            required = true,
+            content = @Content(schema = @Schema(implementation = PessoaDTO.class))) @Valid PessoaDTO pessoaDTO);
+
     @GET
     @Path("{id}")
     @Produces("application/json")
