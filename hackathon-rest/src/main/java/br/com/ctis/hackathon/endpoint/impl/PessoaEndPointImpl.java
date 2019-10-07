@@ -2,6 +2,7 @@ package br.com.ctis.hackathon.endpoint.impl;
 
 import br.com.ctis.hackathon.dto.MensagemRetornoDTO;
 import br.com.ctis.hackathon.dto.PessoaDTO;
+import br.com.ctis.hackathon.dto.TelefoneDTO;
 import br.com.ctis.hackathon.endpoint.PessoaEndPoint;
 import br.com.ctis.hackathon.persistence.model.Pessoa;
 import br.com.ctis.hackathon.persistence.model.Telefone;
@@ -30,8 +31,8 @@ public class PessoaEndPointImpl implements PessoaEndPoint {
 
     @Override
     public Response cadastrar(PessoaDTO pessoaDTO) {
-        pessoaService.cadastrar(pessoaDTO);
-        for(Telefone i: pessoaDTO.getTelefones()){
+        Pessoa pessoa = pessoaService.cadastrar(pessoaDTO);
+        for(TelefoneDTO i: pessoaDTO.getTelefones()){
             this.telefoneService.cadastrar(i);
         }
         return Response.status(Response.Status.CREATED)
@@ -52,9 +53,20 @@ public class PessoaEndPointImpl implements PessoaEndPoint {
         dto.setEmail(p.getEmail());
         dto.setNome(p.getNome());
         dto.setSobrenome(p.getSobrenome());
-        dto.setTelefones(
-                telefoneService.listarTelefonesDePessoaComId(p.getId())
-        );
+
+        List<TelefoneDTO> telefoneDTOList = new ArrayList<>();
+        for (Telefone i: telefoneService.listarTelefonesDePessoaComId(p.getId())) {
+            telefoneDTOList.add(toDTO(i));
+        }
+        dto.setTelefones(telefoneDTOList);
         return dto;
+    }
+
+    private TelefoneDTO toDTO(Telefone t){
+        TelefoneDTO i = new TelefoneDTO();
+        i.setCodigoPais(t.getCodigoPais());
+        i.setDdd(t.getDdd());
+        i.setNumero(t.getNumero());
+        return i;
     }
 }

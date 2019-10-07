@@ -21,8 +21,12 @@ public class Telefone extends EntidadeBase<Long> {
     @Column(name = "numero", nullable = false, length = 10)
     private String numero;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pessoaId")
     private Pessoa pessoa;
+
+    @Column(name = "pessoaId", updatable = false, nullable = false)
+    private Long pessoaId;
 
     @Override
     public Long getId() {
@@ -45,6 +49,10 @@ public class Telefone extends EntidadeBase<Long> {
         return numero;
     }
 
+    public Long getPessoaId() {
+        return pessoaId;
+    }
+
     public void setId(long id) {
         this.id = id;
     }
@@ -63,5 +71,9 @@ public class Telefone extends EntidadeBase<Long> {
 
     public void setPessoa(Pessoa pessoa) {
         this.pessoa = pessoa;
+    }
+
+    public void setPessoaId(Long pessoaId) {
+        this.pessoaId = pessoaId;
     }
 }

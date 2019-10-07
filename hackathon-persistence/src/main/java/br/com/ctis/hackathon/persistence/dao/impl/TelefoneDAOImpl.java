@@ -16,7 +16,7 @@ public class TelefoneDAOImpl extends GenericDAOImpl<Long, Telefone> implements T
     @Override
     public List<Telefone> listarTelefonesDePessoaComId(Long id) throws DAOException {
         StringBuilder strBuilder = new StringBuilder();
-        strBuilder.append(" SELECT e FROM Telefone e").append(" WHERE e.pessoa.id =:id");
+        strBuilder.append(" SELECT e FROM Telefone e").append(" WHERE e.pessoaId =:id");
         TypedQuery<Telefone> query = getEntityManager().createQuery(strBuilder.toString(), Telefone.class);
         query.setParameter("id", id);
         try {

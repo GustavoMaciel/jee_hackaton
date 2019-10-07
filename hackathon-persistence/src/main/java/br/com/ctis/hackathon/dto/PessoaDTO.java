@@ -1,6 +1,5 @@
 package br.com.ctis.hackathon.dto;
 
-import br.com.ctis.hackathon.persistence.model.Telefone;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
@@ -35,7 +34,7 @@ public class PessoaDTO extends BaseDTO {
     private String cpf;
 
     @Schema(description = "Lista de telefones da pessoa", required = false)
-    private List<Telefone> telefones;
+    private List<TelefoneDTO> telefones;
 
     public String getSobrenome() {
         return sobrenome;
@@ -53,7 +52,7 @@ public class PessoaDTO extends BaseDTO {
         return cpf;
     }
 
-    public List<Telefone> getTelefones() {
+    public List<TelefoneDTO> getTelefones() {
         return telefones;
     }
 
@@ -73,7 +72,7 @@ public class PessoaDTO extends BaseDTO {
         this.cpf = cpf;
     }
 
-    public void setTelefones(List<Telefone> telefones) {
+    public void setTelefones(List<TelefoneDTO> telefones) {
         this.telefones = telefones;
     }
 }

@@ -1,5 +1,6 @@
 package br.com.ctis.hackathon.service.impl;
 
+import br.com.ctis.hackathon.dto.TelefoneDTO;
 import br.com.ctis.hackathon.enumeration.MensagemEnum;
 import br.com.ctis.hackathon.exception.DAOException;
 import br.com.ctis.hackathon.exception.NegocioException;
@@ -31,8 +32,8 @@ public class TelefoneServiceImpl extends GenericServiceImpl<Long, Telefone> impl
     }
 
     @Override
-    public void cadastrar(Telefone telefone) {
-        this.telefoneDAO.gravar(telefone);
+    public void cadastrar(TelefoneDTO telefone) {
+        this.telefoneDAO.gravar(toModel(telefone));
     }
 
     @Override
@@ -44,5 +45,13 @@ public class TelefoneServiceImpl extends GenericServiceImpl<Long, Telefone> impl
         } catch (DAOException e){
             throw new NegocioException(MensagemUtil.getMessage(MensagemEnum.MSG001));
         }
+    }
+
+    private Telefone toModel(TelefoneDTO t){
+        Telefone i = new Telefone();
+        i.setCodigoPais(t.getCodigoPais());
+        i.setDdd(t.getDdd());
+        i.setNumero(t.getNumero());
+        return i;
     }
 }

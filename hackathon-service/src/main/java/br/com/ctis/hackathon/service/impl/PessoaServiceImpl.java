@@ -35,9 +35,8 @@ public class PessoaServiceImpl extends GenericServiceImpl<Long, Pessoa> implemen
     }
 
     @Override
-    public void cadastrar(PessoaDTO pessoaDTO) {
-        Pessoa pessoa = toModel(pessoaDTO);
-        this.pessoaDAO.gravar(pessoa);
+    public Pessoa cadastrar(PessoaDTO pessoaDTO) {
+        return this.pessoaDAO.gravar(toModel(pessoaDTO));
     }
 
     @Override

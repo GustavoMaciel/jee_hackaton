@@ -47,7 +47,7 @@ public abstract class GenericDAOImpl<K extends Serializable, T extends EntidadeB
 	@Override
 	public T gravar(T objeto) {
 		ValidatorBase.validate(objeto);
-
+		System.out.println("Persist :" + objeto.toString());
 		if (objeto.getId() == null) {
 			em.persist(objeto);
 			return objeto;

@@ -20,7 +20,7 @@ public interface PessoaService extends GenericService<Long, Pessoa> {
      *
      * @param pessoaDTO - Parâmetro de entrada para cadastro da Pessoa
      */
-    void cadastrar(PessoaDTO pessoaDTO);
+    Pessoa cadastrar(PessoaDTO pessoaDTO);
 
     /**
      * Recuperar Pessoa pelo Id
