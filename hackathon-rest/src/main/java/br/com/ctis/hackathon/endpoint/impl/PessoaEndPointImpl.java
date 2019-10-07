@@ -65,6 +65,7 @@ public class PessoaEndPointImpl implements PessoaEndPoint {
                 }
             }
             if (deletarAtual){
+                //TODO FOR SOME REASON HIBERNATE IS GIVING ME A NULL ID ON ALL TELEFONES!
                 telefoneService.deletar(telefoneService.buscarTelefonePorId(i.getId()));
             }
         }
@@ -100,10 +101,11 @@ public class PessoaEndPointImpl implements PessoaEndPoint {
     }
 
     private TelefoneDTO toDTO(Telefone t){
-        TelefoneDTO i = new TelefoneDTO();
-        i.setCodigoPais(t.getCodigoPais());
-        i.setDdd(t.getDdd());
-        i.setNumero(t.getNumero());
-        return i;
+        TelefoneDTO dto = new TelefoneDTO();
+        dto.setId(t.getId());
+        dto.setCodigoPais(t.getCodigoPais());
+        dto.setDdd(t.getDdd());
+        dto.setNumero(t.getNumero());
+        return dto;
     }
 }

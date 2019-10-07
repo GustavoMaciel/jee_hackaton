@@ -7,6 +7,10 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class TelefoneDTO extends BaseDTO{
+
+    @Schema(description = "Id do telefone", required = false)
+    private Long id;
+
     @NotNull(message = "Código do país não pode ser nulo")
     @NotBlank(message = "Código do país não pode ser vazio")
     @Length(max = 5, message = "Código do país deve possuir até 5 caracteres")
@@ -25,6 +29,10 @@ public class TelefoneDTO extends BaseDTO{
     @Schema(description= "Número do telefone", required = true)
     private String numero;
 
+    public Long getId() {
+        return id;
+    }
+
     public String getCodigoPais() {
         return codigoPais;
     }
@@ -35,6 +43,10 @@ public class TelefoneDTO extends BaseDTO{
 
     public String getNumero() {
         return numero;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setCodigoPais(String codigoPais) {
