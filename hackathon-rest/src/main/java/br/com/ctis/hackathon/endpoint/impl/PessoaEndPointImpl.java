@@ -59,14 +59,13 @@ public class PessoaEndPointImpl implements PessoaEndPoint {
         for(Telefone i: this.telefoneService.listarTelefonesDePessoaComId(pessoaDTO.getId())) {
             boolean deletarAtual = true;
             for(TelefoneDTO j: pessoaDTO.getTelefones()){
-                if (i.getCodigoPais().equals(j.getCodigoPais()) && i.getDdd().equals(j.getDdd()) && i.getNumero().equals(j.getNumero())){
+                if (i.getId().equals(j.getId())){
                     deletarAtual = false;
                     break;
                 }
             }
             if (deletarAtual){
-                //TODO FOR SOME REASON HIBERNATE IS GIVING ME A NULL ID ON ALL TELEFONES!
-                telefoneService.deletar(telefoneService.buscarTelefonePorId(i.getId()));
+                telefoneService.deletar(i.getId());
             }
         }
     }

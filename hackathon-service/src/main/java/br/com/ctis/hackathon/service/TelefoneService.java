@@ -40,5 +40,5 @@ public interface TelefoneService {
      * @param telefone - Telefone à ser deletado
      * @return {@link Telefone} - Representa o Telefone deletado do sistema
      */
-    void deletar(Telefone telefone);
+    void deletar(Long id);
 }

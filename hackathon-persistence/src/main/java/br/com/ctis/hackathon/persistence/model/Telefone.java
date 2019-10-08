@@ -6,7 +6,6 @@ import javax.persistence.*;
 @Table(name = "tb_telefone", schema = "hackaton")
 public class Telefone extends EntidadeBase<Long> {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -30,7 +29,7 @@ public class Telefone extends EntidadeBase<Long> {
 
     @Override
     public Long getId() {
-        return null;
+        return id;
     }
 
     public Pessoa getPessoa() {
