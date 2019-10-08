@@ -77,4 +77,17 @@ public interface PessoaEndPoint {
             }
     )
     Response buscarPessoaPorId(@PathParam(value="id") Long id);
+
+    @DELETE
+    @Path("{id}")
+    @Produces("application/json")
+    @Operation(description = "Deleta Pessoa pelo Id", summary = "Deletar Pessoa",
+            responses = {
+                    @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json")),
+                    @ApiResponse(responseCode = "400", description = "Bad Request"),
+                    @ApiResponse(responseCode = "404", description = "Not found"),
+                    @ApiResponse(responseCode = "500", description = "Internal Server Error")
+            }
+    )
+    Response deletar(@PathParam(value="id") Long id);
 }

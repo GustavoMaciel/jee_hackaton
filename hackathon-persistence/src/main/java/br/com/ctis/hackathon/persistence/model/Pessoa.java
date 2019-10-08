@@ -1,6 +1,7 @@
 package br.com.ctis.hackathon.persistence.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_pessoa", schema = "hackaton")
@@ -23,6 +24,8 @@ public class Pessoa extends EntidadeBase<Long> {
     @Column(name = "cpf", nullable = false, length = 16)
     private String cpf;
 
+    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL)
+    private List<Telefone> telefones;
 
     @Override
     public Long getId() {
@@ -45,6 +48,10 @@ public class Pessoa extends EntidadeBase<Long> {
         return sobrenome;
     }
 
+    public List<Telefone> getTelefones() {
+        return telefones;
+    }
+
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
@@ -65,4 +72,7 @@ public class Pessoa extends EntidadeBase<Long> {
         this.sobrenome = sobrenome;
     }
 
+    public void setTelefones(List<Telefone> telefones) {
+        this.telefones = telefones;
+    }
 }

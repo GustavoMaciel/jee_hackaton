@@ -50,6 +50,11 @@ public class PessoaServiceImpl extends GenericServiceImpl<Long, Pessoa> implemen
         }
     }
 
+    @Override
+    public void deletar(Long id) {
+        pessoaDAO.excluir(id);
+    }
+
     /**
      * Converter PessoaDTO para entidade Pessoa
      *

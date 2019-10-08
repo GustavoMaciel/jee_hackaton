@@ -30,4 +30,11 @@ public interface PessoaService extends GenericService<Long, Pessoa> {
      * @return {@link Pessoa} - Representa uma Pessoa cadastrada no sistema
      */
     Pessoa buscarPessoaPorId(Long id);
+
+    /**
+     * Deleta Pessoa pelo Id
+     *
+     * @param id - Identificado da Pessoa na base de dados
+     */
+    void deletar(Long id);
 }

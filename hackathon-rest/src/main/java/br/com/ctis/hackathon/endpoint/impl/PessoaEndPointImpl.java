@@ -4,6 +4,7 @@ import br.com.ctis.hackathon.dto.MensagemRetornoDTO;
 import br.com.ctis.hackathon.dto.PessoaDTO;
 import br.com.ctis.hackathon.dto.TelefoneDTO;
 import br.com.ctis.hackathon.endpoint.PessoaEndPoint;
+import br.com.ctis.hackathon.exception.DAOException;
 import br.com.ctis.hackathon.persistence.model.Pessoa;
 import br.com.ctis.hackathon.persistence.model.Telefone;
 import br.com.ctis.hackathon.service.PessoaService;
@@ -83,6 +84,14 @@ public class PessoaEndPointImpl implements PessoaEndPoint {
                 .build();
     }
 
+    @Override
+    public Response deletar(Long id) {
+            pessoaService.deletar(id);
+            return Response.status(Response.Status.OK).entity(new MensagemRetornoDTO("Pessoa deletada com sucesso!"))
+                    .build();
+    }
+
+
     private PessoaDTO toDTO(Pessoa p){
         PessoaDTO dto = new PessoaDTO();
         dto.setId(p.getId());
@@ -92,7 +101,7 @@ public class PessoaEndPointImpl implements PessoaEndPoint {
         dto.setSobrenome(p.getSobrenome());
 
         List<TelefoneDTO> telefoneDTOList = new ArrayList<>();
-        for (Telefone i: telefoneService.listarTelefonesDePessoaComId(p.getId())) {
+        for (Telefone i: p.getTelefones()) {
             telefoneDTOList.add(toDTO(i));
         }
         dto.setTelefones(telefoneDTOList);

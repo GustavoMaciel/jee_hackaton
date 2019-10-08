@@ -20,7 +20,7 @@ public class Telefone extends EntidadeBase<Long> {
     @Column(name = "numero", nullable = false, length = 10)
     private String numero;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "pessoaId")
     private Pessoa pessoa;
 
