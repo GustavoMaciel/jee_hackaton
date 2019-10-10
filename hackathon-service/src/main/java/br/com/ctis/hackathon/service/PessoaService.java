@@ -13,7 +13,7 @@ public interface PessoaService extends GenericService<Long, Pessoa> {
      *
      * @return {@link List <Pessoa>} - Lista com Pessoas cadastradas
      */
-    List<Pessoa> listar();
+    List<Pessoa> listar(int pageNumber, int pageSize);
 
     /**
      * Cadastrar uma nova Pessoa no sistema
@@ -37,4 +37,10 @@ public interface PessoaService extends GenericService<Long, Pessoa> {
      * @param id - Identificado da Pessoa na base de dados
      */
     void deletar(Long id);
+
+    /**
+     * Retorna o número de Pessoas cadastradas
+     * @return {@link Long} Número total de pessoas cadastradas no sistema
+     */
+    Long getTotalItems();
 }

@@ -1,6 +1,7 @@
 package br.com.ctis.hackathon.endpoint;
 
 import br.com.ctis.hackathon.dto.PessoaDTO;
+import br.com.ctis.hackathon.util.PageDict;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -29,7 +30,11 @@ public interface PessoaEndPoint {
                     @ApiResponse(responseCode = "500", description = "Internal Server Error")
             }
     )
-    Response listar();
+    Response listar(@RequestBody(
+            description = "Informações de tamanho de página e busca",
+            required = true,
+            content = @Content(schema = @Schema(implementation = PageDict.class))) @Valid PageDict pageDict
+                    );
 
     @POST
     @Consumes("application/json")

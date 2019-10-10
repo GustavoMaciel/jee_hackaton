@@ -8,6 +8,7 @@ import br.com.ctis.hackathon.persistence.model.Pessoa;
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
@@ -15,8 +16,11 @@ import java.util.List;
 public class PessoaDAOImpl extends GenericDAOImpl<Long, Pessoa> implements PessoaDAO {
 
     @Override
-    public List<Pessoa> listarTodos() throws DAOException {
+    public List<Pessoa> listarTodos(int pageNumber, int pageSize) throws DAOException {
         TypedQuery<Pessoa> query = getEntityManager().createQuery("SELECT e FROM Pessoa e", Pessoa.class);
+
+        query.setFirstResult((pageNumber-1) * pageSize);
+        query.setMaxResults(pageSize);
 
         try {
             return query.getResultList();
@@ -27,10 +31,8 @@ public class PessoaDAOImpl extends GenericDAOImpl<Long, Pessoa> implements Pesso
 
     @Override
     public Pessoa buscarPorId(Long id) throws RegistroNaoEncontradoException, DAOException {
-        StringBuilder builder = new StringBuilder();
-        builder.append(" SELECT e FROM Pessoa e").append(" WHERE e.id =:id ");
 
-        TypedQuery<Pessoa> query = getEntityManager().createQuery(builder.toString(), Pessoa.class);
+        TypedQuery<Pessoa> query = getEntityManager().createQuery(" SELECT e FROM Pessoa e" + " WHERE e.id =:id ", Pessoa.class);
         query.setParameter("id", id);
 
         try {
@@ -40,5 +42,11 @@ public class PessoaDAOImpl extends GenericDAOImpl<Long, Pessoa> implements Pesso
         } catch (PersistenceException e) {
             throw new DAOException();
         }
+    }
+
+    @Override
+    public Long getTotalItems() {
+        Query queryTotal = getEntityManager().createQuery("SELECT count(e.id) FROM Pessoa e");
+        return (long) queryTotal.getSingleResult();
     }
 }

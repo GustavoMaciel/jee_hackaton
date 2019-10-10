@@ -26,9 +26,9 @@ public class PessoaServiceImpl extends GenericServiceImpl<Long, Pessoa> implemen
     private PessoaDAO pessoaDAO;
 
     @Override
-    public List<Pessoa> listar() {
+    public List<Pessoa> listar(int pageNumber, int pageSize) {
         try {
-            return pessoaDAO.listarTodos();
+            return pessoaDAO.listarTodos(pageNumber, pageSize);
         } catch (DAOException e){
             throw new NegocioException(MensagemUtil.getMessage(MensagemEnum.MSG001));
         }
@@ -53,6 +53,11 @@ public class PessoaServiceImpl extends GenericServiceImpl<Long, Pessoa> implemen
     @Override
     public void deletar(Long id) {
         pessoaDAO.excluir(id);
+    }
+
+    @Override
+    public Long getTotalItems() {
+        return pessoaDAO.getTotalItems();
     }
 
     /**

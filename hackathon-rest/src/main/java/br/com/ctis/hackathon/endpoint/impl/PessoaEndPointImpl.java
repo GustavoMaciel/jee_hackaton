@@ -1,6 +1,7 @@
 package br.com.ctis.hackathon.endpoint.impl;
 
 import br.com.ctis.hackathon.dto.MensagemRetornoDTO;
+import br.com.ctis.hackathon.dto.PaginacaoDTO;
 import br.com.ctis.hackathon.dto.PessoaDTO;
 import br.com.ctis.hackathon.dto.TelefoneDTO;
 import br.com.ctis.hackathon.endpoint.PessoaEndPoint;
@@ -9,6 +10,7 @@ import br.com.ctis.hackathon.persistence.model.Pessoa;
 import br.com.ctis.hackathon.persistence.model.Telefone;
 import br.com.ctis.hackathon.service.PessoaService;
 import br.com.ctis.hackathon.service.TelefoneService;
+import br.com.ctis.hackathon.util.PageDict;
 
 import javax.ejb.EJB;
 import javax.ws.rs.core.Response;
@@ -22,12 +24,16 @@ public class PessoaEndPointImpl implements PessoaEndPoint {
     private TelefoneService telefoneService;
 
     @Override
-    public Response listar() {
+    public Response listar(PageDict pageDict) {
         List<PessoaDTO> listaDeDTOS = new ArrayList<>();
-        for(Pessoa i: pessoaService.listar()){
+        for(Pessoa i: pessoaService.listar(pageDict.getPageNumber(), pageDict.getPageSize())){
             listaDeDTOS.add(this.toDTO(i));
         }
-        return Response.status(Response.Status.OK).entity(listaDeDTOS).build();
+
+        PaginacaoDTO<PessoaDTO> pagina = new PaginacaoDTO<>(pageDict.getPageNumber(), pageDict.getPageSize());
+        pagina.setItens(listaDeDTOS);
+        pagina.setTotalResults(pessoaService.getTotalItems());
+        return Response.status(Response.Status.OK).entity(pagina).build();
     }
 
     private Response templatePostPut(PessoaDTO pessoaDTO, String action){
