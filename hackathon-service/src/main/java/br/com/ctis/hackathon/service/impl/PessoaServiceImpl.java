@@ -28,7 +28,7 @@ public class PessoaServiceImpl extends GenericServiceImpl<Long, Pessoa> implemen
     @Override
     public List<Pessoa> listar(int pageNumber, int pageSize, String search) {
         try {
-            return pessoaDAO.listarTodos(pageNumber, pageSize);
+            return pessoaDAO.listarTodos(pageNumber, pageSize, search);
         } catch (DAOException e){
             throw new NegocioException(MensagemUtil.getMessage(MensagemEnum.MSG001));
         }
