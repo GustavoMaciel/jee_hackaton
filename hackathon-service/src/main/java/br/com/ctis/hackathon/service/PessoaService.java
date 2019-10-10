@@ -13,7 +13,7 @@ public interface PessoaService extends GenericService<Long, Pessoa> {
      *
      * @return {@link List <Pessoa>} - Lista com Pessoas cadastradas
      */
-    List<Pessoa> listar(int pageNumber, int pageSize);
+    List<Pessoa> listar(int pageNumber, int pageSize, String search);
 
     /**
      * Cadastrar uma nova Pessoa no sistema

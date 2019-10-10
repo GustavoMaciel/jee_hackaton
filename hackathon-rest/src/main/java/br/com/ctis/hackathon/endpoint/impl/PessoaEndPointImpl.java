@@ -26,7 +26,7 @@ public class PessoaEndPointImpl implements PessoaEndPoint {
     @Override
     public Response listar(PageDict pageDict) {
         List<PessoaDTO> listaDeDTOS = new ArrayList<>();
-        for(Pessoa i: pessoaService.listar(pageDict.getPageNumber(), pageDict.getPageSize())){
+        for(Pessoa i: pessoaService.listar(pageDict.getPageNumber(), pageDict.getPageSize(), pageDict.getSearchName())){
             listaDeDTOS.add(this.toDTO(i));
         }
 

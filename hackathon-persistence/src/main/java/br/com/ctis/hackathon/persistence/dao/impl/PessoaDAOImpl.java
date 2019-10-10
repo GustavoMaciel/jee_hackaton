@@ -16,8 +16,15 @@ import java.util.List;
 public class PessoaDAOImpl extends GenericDAOImpl<Long, Pessoa> implements PessoaDAO {
 
     @Override
-    public List<Pessoa> listarTodos(int pageNumber, int pageSize) throws DAOException {
-        TypedQuery<Pessoa> query = getEntityManager().createQuery("SELECT e FROM Pessoa e", Pessoa.class);
+    public List<Pessoa> listarTodos(int pageNumber, int pageSize, String search) throws DAOException {
+        StringBuilder strBuilder = new StringBuilder("SELECT e FROM Pessoa e");
+        if(search != null){
+            strBuilder.append(" WHERE e.nome LIKE '%nome%' OR WHERE e.sobrenome LIKE '%nome%'");
+        }
+        TypedQuery<Pessoa> query = getEntityManager().createQuery(strBuilder.toString(), Pessoa.class);
+        if(search != null){
+            query.setParameter("nome", search);
+        }
 
         query.setFirstResult((pageNumber-1) * pageSize);
         query.setMaxResults(pageSize);
