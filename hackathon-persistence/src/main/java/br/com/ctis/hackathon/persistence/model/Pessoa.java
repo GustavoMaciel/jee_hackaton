@@ -24,7 +24,7 @@ public class Pessoa extends EntidadeBase<Long> {
     @Column(name = "cpf", nullable = false, length = 16)
     private String cpf;
 
-    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Telefone> telefones;
 
     @Override

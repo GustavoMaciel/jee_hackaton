@@ -15,12 +15,19 @@ import java.util.List;
 @Stateless
 public class PessoaDAOImpl extends GenericDAOImpl<Long, Pessoa> implements PessoaDAO {
 
+    private StringBuilder getSearchedStringBuilder(String searchName, String quickStart){
+        StringBuilder strBuilder = new StringBuilder(quickStart);
+
+        if(searchName != null){
+            strBuilder.append(" WHERE e.nome LIKE CONCAT('%', :nome, '%') OR e.sobrenome LIKE CONCAT('%', :nome, '%') ");
+        }
+
+        return strBuilder;
+    }
+
     @Override
     public List<Pessoa> listarTodos(int pageNumber, int pageSize, String search) throws DAOException {
-        StringBuilder strBuilder = new StringBuilder("SELECT e FROM Pessoa e");
-        if(search != null){
-            strBuilder.append(" WHERE e.nome LIKE '%nome%' OR WHERE e.sobrenome LIKE '%nome%'");
-        }
+        StringBuilder strBuilder = getSearchedStringBuilder(search, "SELECT e FROM Pessoa e");
         TypedQuery<Pessoa> query = getEntityManager().createQuery(strBuilder.toString(), Pessoa.class);
         if(search != null){
             query.setParameter("nome", search);
@@ -52,8 +59,12 @@ public class PessoaDAOImpl extends GenericDAOImpl<Long, Pessoa> implements Pesso
     }
 
     @Override
-    public Long getTotalItems() {
-        Query queryTotal = getEntityManager().createQuery("SELECT count(e.id) FROM Pessoa e");
+    public Long getTotalItems(String searchName) {
+        StringBuilder stringBuilder = getSearchedStringBuilder(searchName, "SELECT count(e.id) FROM Pessoa e");
+        Query queryTotal = getEntityManager().createQuery(stringBuilder.toString());
+        if(searchName != null){
+            queryTotal.setParameter("nome", searchName);
+        }
         return (long) queryTotal.getSingleResult();
     }
 }

@@ -21,6 +21,7 @@ import javax.ws.rs.core.Response;
 public interface PessoaEndPoint {
 
     @GET
+    @Consumes("application/json")
     @Produces("application/json")
     @Operation(description = "Lista as Pessoas cadastradas no sistema", summary = "Listar Pessoas",
             responses = {

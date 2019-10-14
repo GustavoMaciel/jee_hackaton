@@ -42,5 +42,5 @@ public interface PessoaService extends GenericService<Long, Pessoa> {
      * Retorna o número de Pessoas cadastradas
      * @return {@link Long} Número total de pessoas cadastradas no sistema
      */
-    Long getTotalItems();
+    Long getTotalItems(String searchName);
 }

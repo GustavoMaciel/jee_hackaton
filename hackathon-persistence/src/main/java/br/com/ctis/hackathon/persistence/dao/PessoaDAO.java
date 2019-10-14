@@ -11,5 +11,5 @@ import java.util.List;
 public interface PessoaDAO extends GenericDAO<Long, Pessoa> {
     List<Pessoa> listarTodos(int pageNumber, int pageSize, String search) throws DAOException;
     Pessoa buscarPorId(Long id) throws RegistroNaoEncontradoException, DAOException;
-    Long getTotalItems();
+    Long getTotalItems(String searchName);
 }

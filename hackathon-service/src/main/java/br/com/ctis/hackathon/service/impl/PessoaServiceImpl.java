@@ -56,8 +56,8 @@ public class PessoaServiceImpl extends GenericServiceImpl<Long, Pessoa> implemen
     }
 
     @Override
-    public Long getTotalItems() {
-        return pessoaDAO.getTotalItems();
+    public Long getTotalItems(String searchName) {
+        return pessoaDAO.getTotalItems(searchName);
     }
 
     /**

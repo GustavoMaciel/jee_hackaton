@@ -32,7 +32,7 @@ public class PessoaEndPointImpl implements PessoaEndPoint {
 
         PaginacaoDTO<PessoaDTO> pagina = new PaginacaoDTO<>(pageDict.getPageNumber(), pageDict.getPageSize());
         pagina.setItens(listaDeDTOS);
-        pagina.setTotalResults(pessoaService.getTotalItems());
+        pagina.setTotalResults(pessoaService.getTotalItems(pageDict.getSearchName()));
         return Response.status(Response.Status.OK).entity(pagina).build();
     }
 
