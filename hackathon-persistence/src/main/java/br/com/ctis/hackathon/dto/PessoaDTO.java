@@ -20,7 +20,7 @@ public class PessoaDTO extends BaseDTO {
 
     @NotNull(message = "Sobrenome não pode ser nulo")
     @NotBlank(message = "Sobrenome não pode ser vazio")
-    @Length(max = 150, message = "Nome deve possuir até 150 caracteres")
+    @Length(max = 150, message = "Sobreome deve possuir até 150 caracteres")
     @Schema(description= "Sobrenome da pessoa", required = true)
     private String sobrenome;
 

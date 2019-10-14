@@ -11,19 +11,19 @@ public class Endereco extends EntidadeBase<Long> {
     @Column(name = "id")
     private long id;
 
-    @Column(name = "cidade", nullable = false, length = 5)
+    @Column(name = "cidade", nullable = false, length = 30)
     private String cidade;
 
-    @Column(name = "estado", nullable = false, length = 5)
+    @Column(name = "estado", nullable = false, length = 30)
     private String estado;
 
-    @Column(name = "rua", nullable = false, length = 10)
+    @Column(name = "rua", nullable = false, length = 100)
     private String rua;
 
-    @Column(name = "numero", nullable = false, length = 10)
+    @Column(name = "numero", nullable = false, length = 30)
     private String numero;
 
-    @Column(name = "bairro", nullable = false, length = 10)
+    @Column(name = "bairro", nullable = false, length = 30)
     private String bairro;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

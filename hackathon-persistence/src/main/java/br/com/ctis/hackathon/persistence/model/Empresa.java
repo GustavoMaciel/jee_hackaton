@@ -17,10 +17,10 @@ public class Empresa extends EntidadeBase<Long> {
     @Column(name = "nomeFantasia", nullable = false, length = 150)
     private String nomeFantasia;
 
-    @Column(name = "missao", nullable = false, length = 255)
+    @Column(name = "missao", nullable = false, length = 600, columnDefinition = "TEXT")
     private String missao;
 
-    @Column(name = "visao", nullable = false, length = 16)
+    @Column(name = "visao", nullable = false,length = 600, columnDefinition = "TEXT")
     private String visao;
 
     @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
