@@ -43,6 +43,11 @@ public class EmpresaDAOImpl extends GenericDAOImpl<Long, Empresa> implements Emp
 
     @Override
     public Long getTotalItems(String searchName) {
-        return null;
+        StringBuilder stringBuilder = getSearchedStringBuilder(searchName, "SELECT count(e.id) FROM Empresa e");
+        Query queryTotal = getEntityManager().createQuery(stringBuilder.toString());
+        if(searchName != null){
+            queryTotal.setParameter("nome", searchName);
+        }
+        return (long) queryTotal.getSingleResult();
     }
 }
