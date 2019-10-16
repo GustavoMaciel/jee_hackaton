@@ -4,10 +4,11 @@ import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 
+import br.com.ctis.hackathon.exception.DAOException;
+import br.com.ctis.hackathon.exception.RegistroNaoEncontradoException;
 import br.com.ctis.hackathon.persistence.ValidatorBase;
 import br.com.ctis.hackathon.persistence.dao.GenericDAO;
 import br.com.ctis.hackathon.persistence.model.EntidadeBase;
@@ -34,14 +35,45 @@ public abstract class GenericDAOImpl<K extends Serializable, T extends EntidadeB
 		this.clazz = (Class<T>) getTypeClass();
 	}
 
+	protected StringBuilder getSearchedStringBuilder(String searchName, String quickStart){
+		return null;
+	}
+
+	protected Query criarListarTodosQuery(String search){
+		return null;
+	}
+
+	public List<T> listarObjetosPageados(int pageNumber, int pageSize, String search) throws DAOException {
+		Query query = criarListarTodosQuery(search);
+		query.setFirstResult((pageNumber-1) * pageSize);
+		query.setMaxResults(pageSize);
+
+		try {
+			return query.getResultList();
+		} catch (PersistenceException e) {
+			throw new DAOException();
+		}
+	}
+
 	@Override
 	public List<T> listar() {
 		return em.createQuery(getCriteriaBuilder().createQuery(clazz)).getResultList();
 	}
 
+	protected Query criarBuscarPorIdQuery(K id){
+		return null;
+	}
+
 	@Override
-	public T consultarPorId(K id) {
-		return em.find(clazz, id);
+	public T buscarPorId(K id) throws RegistroNaoEncontradoException, DAOException{
+		Query query = criarBuscarPorIdQuery(id);
+		try {
+			return (T) query.getSingleResult();
+		} catch (NoResultException e){
+			throw new RegistroNaoEncontradoException();
+		} catch (PersistenceException e){
+			throw new DAOException();
+		}
 	}
 
 	@Override
@@ -53,6 +85,11 @@ public abstract class GenericDAOImpl<K extends Serializable, T extends EntidadeB
 		}
 
 		return em.merge(objeto);
+	}
+
+	@Override
+	public T consultarPorId(K id){
+		return em.find(clazz, id);
 	}
 
 	@Override

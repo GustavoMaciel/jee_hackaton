@@ -3,9 +3,13 @@ package br.com.ctis.hackathon.persistence.dao;
 import java.io.Serializable;
 import java.util.List;
 
+import br.com.ctis.hackathon.exception.DAOException;
+import br.com.ctis.hackathon.exception.RegistroNaoEncontradoException;
 import br.com.ctis.hackathon.persistence.model.EntidadeBase;
 
 public interface GenericDAO<K extends Serializable, T extends EntidadeBase<K>> {
+
+    List<T> listarObjetosPageados(int pageNumber, int pageSize, String search) throws DAOException;
 
     List<T> listar();
     
@@ -17,6 +21,8 @@ public interface GenericDAO<K extends Serializable, T extends EntidadeBase<K>> {
      * @return entidade encontrada, <code>null</code> caso não seja encontrada
      */
     T consultarPorId(K id);
+
+    T buscarPorId(K id) throws RegistroNaoEncontradoException, DAOException;
 
     /**
      * Realiza a persistência de uma entidade, caso ela tenha um id será chamado o método

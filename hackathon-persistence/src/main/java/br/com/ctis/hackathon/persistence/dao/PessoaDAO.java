@@ -9,7 +9,7 @@ import java.util.List;
 
 @Local
 public interface PessoaDAO extends GenericDAO<Long, Pessoa> {
-    List<Pessoa> listarTodos(int pageNumber, int pageSize, String search) throws DAOException;
+    List<Pessoa> listarObjetosPageados(int pageNumber, int pageSize, String search) throws DAOException;
     Pessoa buscarPorId(Long id) throws RegistroNaoEncontradoException, DAOException;
     Long getTotalItems(String searchName);
 }

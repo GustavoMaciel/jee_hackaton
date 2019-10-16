@@ -15,47 +15,30 @@ import java.util.List;
 @Stateless
 public class PessoaDAOImpl extends GenericDAOImpl<Long, Pessoa> implements PessoaDAO {
 
-    private StringBuilder getSearchedStringBuilder(String searchName, String quickStart){
+    @Override
+    protected StringBuilder getSearchedStringBuilder(String searchName, String quickStart){
         StringBuilder strBuilder = new StringBuilder(quickStart);
-
         if(searchName != null){
             strBuilder.append(" WHERE e.nome LIKE CONCAT('%', :nome, '%') OR e.sobrenome LIKE CONCAT('%', :nome, '%') ");
         }
-
         return strBuilder;
     }
-
     @Override
-    public List<Pessoa> listarTodos(int pageNumber, int pageSize, String search) throws DAOException {
+    protected Query criarListarTodosQuery(String search) {
         StringBuilder strBuilder = getSearchedStringBuilder(search, "SELECT e FROM Pessoa e");
         TypedQuery<Pessoa> query = getEntityManager().createQuery(strBuilder.toString(), Pessoa.class);
+
         if(search != null){
             query.setParameter("nome", search);
         }
-
-        query.setFirstResult((pageNumber-1) * pageSize);
-        query.setMaxResults(pageSize);
-
-        try {
-            return query.getResultList();
-        } catch (PersistenceException e) {
-            throw new DAOException();
-        }
+        return query;
     }
 
     @Override
-    public Pessoa buscarPorId(Long id) throws RegistroNaoEncontradoException, DAOException {
-
+    protected Query criarBuscarPorIdQuery(Long id) {
         TypedQuery<Pessoa> query = getEntityManager().createQuery(" SELECT e FROM Pessoa e" + " WHERE e.id =:id ", Pessoa.class);
         query.setParameter("id", id);
-
-        try {
-            return query.getSingleResult();
-        } catch (NoResultException e) {
-            throw new RegistroNaoEncontradoException();
-        } catch (PersistenceException e) {
-            throw new DAOException();
-        }
+        return  query;
     }
 
     @Override

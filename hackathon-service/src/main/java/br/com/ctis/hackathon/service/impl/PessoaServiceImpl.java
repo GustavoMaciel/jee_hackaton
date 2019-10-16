@@ -7,9 +7,7 @@ import br.com.ctis.hackathon.exception.NegocioException;
 import br.com.ctis.hackathon.exception.RegistroNaoEncontradoException;
 import br.com.ctis.hackathon.persistence.dao.PessoaDAO;
 import br.com.ctis.hackathon.persistence.model.Pessoa;
-import br.com.ctis.hackathon.persistence.model.Telefone;
 import br.com.ctis.hackathon.service.PessoaService;
-import br.com.ctis.hackathon.service.TelefoneService;
 import br.com.ctis.hackathon.util.MensagemUtil;
 
 import javax.ejb.EJB;
@@ -28,7 +26,7 @@ public class PessoaServiceImpl extends GenericServiceImpl<Long, Pessoa> implemen
     @Override
     public List<Pessoa> listar(int pageNumber, int pageSize, String search) {
         try {
-            return pessoaDAO.listarTodos(pageNumber, pageSize, search);
+            return pessoaDAO.listarObjetosPageados(pageNumber, pageSize, search);
         } catch (DAOException e){
             throw new NegocioException(MensagemUtil.getMessage(MensagemEnum.MSG001));
         }
