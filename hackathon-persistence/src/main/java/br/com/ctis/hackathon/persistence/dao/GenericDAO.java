@@ -15,8 +15,7 @@ public interface GenericDAO<K extends Serializable, T extends EntidadeBase<K>> {
     
     /**
      * Recupera a entidade de acordo com o tipo e com o id.
-     * 
-     * @param tipo tipo da entidade
+     *
      * @param id identificador
      * @return entidade encontrada, <code>null</code> caso não seja encontrada
      */
