@@ -12,14 +12,14 @@ public class Produto extends EntidadeBase<Long> {
     @Column(name = "id")
     private long id;
 
-    @Column(name = "nome", nullable = false, length = 50)
+    @Column(name = "nome", nullable = false, length = 150)
     private String nome;
 
-    @Column(name = "descricao", nullable = false, length = 150)
+    @Column(name = "descricao", nullable = false, length = 600, columnDefinition = "TEXT")
     private String descricao;
 
-    @Column(name = "valor", nullable = false, length = 255)
-    private String valor;
+    @Column(name = "valor", nullable = false)
+    private long valor;
 
     @ManyToMany(mappedBy = "produtos")
     private List<Categoria> categorias;
@@ -37,7 +37,7 @@ public class Produto extends EntidadeBase<Long> {
         return categorias;
     }
 
-    public String getValor() {
+    public long getValor() {
         return valor;
     }
 
@@ -61,7 +61,7 @@ public class Produto extends EntidadeBase<Long> {
         this.descricao = descricao;
     }
 
-    public void setValor(String valor) {
+    public void setValor(long valor) {
         this.valor = valor;
     }
 }
