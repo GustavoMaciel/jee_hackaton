@@ -81,7 +81,7 @@ public interface EmpresaEndPoint {
                     @ApiResponse(responseCode = "500", description = "Internal Server Error")
             }
     )
-    Response buscarPessoaPorId(@PathParam(value="id") Long id);
+    Response buscarEmpresaPorId(@PathParam(value="id") Long id);
 
     @DELETE
     @Path("{id}")

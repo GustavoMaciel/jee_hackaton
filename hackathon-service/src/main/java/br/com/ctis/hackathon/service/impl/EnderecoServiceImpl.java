@@ -24,7 +24,7 @@ public class EnderecoServiceImpl extends GenericServiceImpl<Long, Endereco> impl
     private EnderecoDAO enderecoDAO;
 
     @Override
-    public List<Endereco> listarEnderecosDePessoaComId(Long id) {
+    public List<Endereco> listarEnderecosDeEmpresaComId(Long id) {
         try {
             return enderecoDAO.listarEnderecosDeEmpresaComId(id);
         } catch (DAOException e){

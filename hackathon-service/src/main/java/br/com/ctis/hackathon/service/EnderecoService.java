@@ -15,7 +15,7 @@ public interface EnderecoService {
      * @param id - ID da Empresa
      * @return {@link List <Endereco>} - Lista com telefones ligados ao id informado
      */
-    List<Endereco> listarEnderecosDePessoaComId(Long id);
+    List<Endereco> listarEnderecosDeEmpresaComId(Long id);
 
     /**
      * Cadastrar um novo Endereco no sistema
