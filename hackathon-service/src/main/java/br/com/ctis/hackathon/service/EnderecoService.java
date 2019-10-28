@@ -13,7 +13,7 @@ public interface EnderecoService {
      * Listar todos os enderecos ligados à uma Empresa
      *
      * @param id - ID da Empresa
-     * @return {@link List <Endereco>} - Lista com telefones ligados ao id informado
+     * @return {@link List <Endereco>} - Lista com endereços ligados ao id informado
      */
     List<Endereco> listarEnderecosDeEmpresaComId(Long id);
 
