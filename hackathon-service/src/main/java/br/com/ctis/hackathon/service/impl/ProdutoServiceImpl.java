@@ -6,6 +6,7 @@ import br.com.ctis.hackathon.exception.DAOException;
 import br.com.ctis.hackathon.exception.NegocioException;
 import br.com.ctis.hackathon.exception.RegistroNaoEncontradoException;
 import br.com.ctis.hackathon.persistence.dao.ProdutoDAO;
+import br.com.ctis.hackathon.persistence.model.Categoria;
 import br.com.ctis.hackathon.persistence.model.Produto;
 import br.com.ctis.hackathon.service.ProdutoService;
 import br.com.ctis.hackathon.util.MensagemUtil;
@@ -32,8 +33,8 @@ public class ProdutoServiceImpl extends GenericServiceImpl<Long, Produto> implem
     }
 
     @Override
-    public Produto cadastrar(ProdutoDTO produtoDTO) {
-        return this.produtoDAO.gravar(toModel(produtoDTO));
+    public Produto cadastrar(ProdutoDTO produtoDTO, List<Categoria> categorias) {
+        return this.produtoDAO.gravar(toModel(produtoDTO, categorias));
     }
 
     @Override
@@ -61,10 +62,11 @@ public class ProdutoServiceImpl extends GenericServiceImpl<Long, Produto> implem
      * Converter ProdutoDTO para entidade Pessoa
      *
      * @param produtoDTO - DTO que será convertido
+     * @param categorias - Categorias já com ID do banco
      *
      * @return {@link Produto} - Entidade Pessoa
      */
-    private Produto toModel(ProdutoDTO produtoDTO) {
+    private Produto toModel(ProdutoDTO produtoDTO, List<Categoria> categorias) {
 
         Produto produto = new Produto();
         if(produtoDTO.getId() != null) {
@@ -73,6 +75,7 @@ public class ProdutoServiceImpl extends GenericServiceImpl<Long, Produto> implem
         produto.setDescricao(produtoDTO.getDescricao());
         produto.setNome(produtoDTO.getNome());
         produto.setValor(produtoDTO.getValor());
+        produto.setCategorias(categorias);
 
         return produto;
 

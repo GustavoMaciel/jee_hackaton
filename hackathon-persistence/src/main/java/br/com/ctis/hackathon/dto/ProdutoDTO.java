@@ -8,7 +8,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-public class ProdutoDTO {
+public class ProdutoDTO extends BaseDTO{
 
     @Schema(description = "Id do produto", required = false)
     private Long id;

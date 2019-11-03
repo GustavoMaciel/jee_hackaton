@@ -1,6 +1,7 @@
 package br.com.ctis.hackathon.service;
 
 import br.com.ctis.hackathon.dto.ProdutoDTO;
+import br.com.ctis.hackathon.persistence.model.Categoria;
 import br.com.ctis.hackathon.persistence.model.Produto;
 
 import javax.ejb.Local;
@@ -19,8 +20,9 @@ public interface ProdutoService {
      * Cadastrar um novo Produto no sistema
      *
      * @param produtoDTO - Parâmetro de entrada para cadastro do Produto
+     * @param categorias - Lista com categorias a serem linkadas ao Produto
      */
-    Produto cadastrar(ProdutoDTO produtoDTO);
+    Produto cadastrar(ProdutoDTO produtoDTO, List<Categoria> categorias);
 
     /**
      * Recuperar Produto pelo Id
