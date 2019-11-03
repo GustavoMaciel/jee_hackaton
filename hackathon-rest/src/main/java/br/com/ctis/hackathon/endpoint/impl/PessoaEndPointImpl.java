@@ -6,6 +6,7 @@ import br.com.ctis.hackathon.dto.PessoaDTO;
 import br.com.ctis.hackathon.dto.TelefoneDTO;
 import br.com.ctis.hackathon.endpoint.PessoaEndPoint;
 import br.com.ctis.hackathon.exception.DAOException;
+import br.com.ctis.hackathon.exception.NegocioException;
 import br.com.ctis.hackathon.persistence.model.Pessoa;
 import br.com.ctis.hackathon.persistence.model.Telefone;
 import br.com.ctis.hackathon.service.PessoaService;
@@ -62,23 +63,45 @@ public class PessoaEndPointImpl implements PessoaEndPoint {
         return this.templatePostPut(pessoaDTO, "cadastrada");
     }
 
-    private void telefoneChangesDealer(PessoaDTO pessoaDTO){
-        for(Telefone i: this.telefoneService.listarTelefonesDePessoaComId(pessoaDTO.getId())) {
+    private void deletarTelefonesForaDaNovaLista(List<TelefoneDTO> novosTelefones, List<Telefone> telefonesAntigos){
+        for(Telefone i: telefonesAntigos){
             boolean deletarAtual = true;
-            for(TelefoneDTO j: pessoaDTO.getTelefones()){
-                if (i.getId().equals(j.getId())){
+            for(TelefoneDTO j: novosTelefones){
+                if(i.getId().equals(j.getId())){
                     deletarAtual = false;
                     break;
                 }
             }
-            if (deletarAtual){
+            if(deletarAtual){
                 telefoneService.deletar(i.getId());
             }
         }
     }
 
+    private void telefoneChangesDealer(PessoaDTO pessoaDTO){
+        List<Telefone> telefonesDaPessoa = telefoneService.listarTelefonesDePessoaComId(pessoaDTO.getId());
+        for(TelefoneDTO tel: pessoaDTO.getTelefones()){
+            if(tel.getId() != null) {
+                Telefone telefone = telefoneService.buscarTelefonePorId(tel.getId());
+                boolean estaNaLista = false;
+                for(Telefone i: telefonesDaPessoa){
+                    if (i.getId().equals(telefone.getId())){
+                        estaNaLista = true;
+                        break;
+                    }
+                }
+                if(!estaNaLista){
+                    throw new NegocioException("Telefone na lista não pertence a pessoa sendo atualizada");
+                }
+            }
+        }
+        this.deletarTelefonesForaDaNovaLista(pessoaDTO.getTelefones(), telefonesDaPessoa);
+
+    }
+
     @Override
     public Response atualizar(PessoaDTO pessoaDTO) {
+        pessoaService.buscarPessoaPorId(pessoaDTO.getId());
         this.telefoneChangesDealer(pessoaDTO);
         return this.templatePostPut(pessoaDTO, "atualizada");
     }

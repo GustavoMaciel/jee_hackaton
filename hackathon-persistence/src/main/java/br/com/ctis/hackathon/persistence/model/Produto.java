@@ -21,7 +21,7 @@ public class Produto extends EntidadeBase<Long> {
     @Column(name = "valor", nullable = false)
     private long valor;
 
-    @ManyToMany(mappedBy = "produtos")
+    @ManyToMany(mappedBy = "produtos", cascade = CascadeType.DETACH)
     private List<Categoria> categorias;
 
     @Override

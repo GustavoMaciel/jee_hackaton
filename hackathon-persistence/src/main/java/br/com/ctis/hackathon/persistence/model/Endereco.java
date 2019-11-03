@@ -26,7 +26,7 @@ public class Endereco extends EntidadeBase<Long> {
     @Column(name = "bairro", nullable = false, length = 30)
     private String bairro;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     @JoinColumn(name = "empresa")
     private Empresa empresa;
 

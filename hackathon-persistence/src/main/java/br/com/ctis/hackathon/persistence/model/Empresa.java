@@ -23,7 +23,7 @@ public class Empresa extends EntidadeBase<Long> {
     @Column(name = "visao", nullable = false,length = 600, columnDefinition = "TEXT")
     private String visao;
 
-    @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "empresa", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<Endereco> enderecos;
 
     public List<Endereco> getEnderecos() {

@@ -5,6 +5,7 @@ import br.com.ctis.hackathon.dto.EnderecoDTO;
 import br.com.ctis.hackathon.dto.MensagemRetornoDTO;
 import br.com.ctis.hackathon.dto.PaginacaoDTO;
 import br.com.ctis.hackathon.endpoint.EmpresaEndPoint;
+import br.com.ctis.hackathon.exception.NegocioException;
 import br.com.ctis.hackathon.persistence.model.Empresa;
 import br.com.ctis.hackathon.persistence.model.Endereco;
 import br.com.ctis.hackathon.service.EmpresaService;
@@ -63,23 +64,43 @@ public class EmpresaEndPointImpl implements EmpresaEndPoint {
         return this.templatePostPut(empresaDTO, "cadastrada");
     }
 
-    private void enderecoChangesDealer(EmpresaDTO empresaDTO){
-        for(Endereco i: this.enderecoService.listarEnderecosDeEmpresaComId(empresaDTO.getId())) {
+    private void deletarEnderecosForaDaNovaLista(List<EnderecoDTO> novosEnderecos, List<Endereco> enderecosAntigos){
+        for(Endereco i: enderecosAntigos){
             boolean deletarAtual = true;
-            for(EnderecoDTO j: empresaDTO.getEnderecos()){
-                if (i.getId().equals(j.getId())){
+            for(EnderecoDTO j: novosEnderecos){
+                if(i.getId().equals(j.getId())){
                     deletarAtual = false;
                     break;
                 }
             }
-            if (deletarAtual){
+            if(deletarAtual){
                 enderecoService.deletar(i.getId());
             }
         }
     }
+    private void enderecoChangesDealer(EmpresaDTO empresaDTO){
+        List<Endereco> enderecosDaEmpresa = enderecoService.listarEnderecosDeEmpresaComId(empresaDTO.getId());
+        for(EnderecoDTO end: empresaDTO.getEnderecos()){
+            if(end.getId() != null) {
+                Endereco endereco = enderecoService.buscarEnderecoPorId(end.getId());
+                boolean estaNaLista = false;
+                for(Endereco i: enderecosDaEmpresa){
+                    if (i.getId().equals(endereco.getId())){
+                        estaNaLista = true;
+                        break;
+                    }
+                }
+                if(!estaNaLista){
+                    throw new NegocioException("Endereço na lista não pertence a empresa sendo atualizada");
+                }
+            }
+        }
+        this.deletarEnderecosForaDaNovaLista(empresaDTO.getEnderecos(), enderecosDaEmpresa);
+    }
 
     @Override
     public Response atualizar(EmpresaDTO dto) {
+        empresaService.buscarEmpresaPorId(dto.getId());
         this.enderecoChangesDealer(dto);
         return this.templatePostPut(dto, "atualizada");
     }
