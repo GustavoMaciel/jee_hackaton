@@ -24,15 +24,15 @@ public class EmpresaEndPointImpl implements EmpresaEndPoint {
     private EnderecoService enderecoService;
 
     @Override
-    public Response listar(PageDict pageDict) {
+    public Response listar(int pageNumber, int pageSize, String searchName) {
         List<EmpresaDTO> listaDeDTOS = new ArrayList<>();
-        for(Empresa i: empresaService.listar(pageDict.getPageNumber(), pageDict.getPageSize(), pageDict.getSearchName())){
+        for(Empresa i: empresaService.listar(pageNumber, pageSize, searchName)){
             listaDeDTOS.add(this.toDTO(i));
         }
 
-        PaginacaoDTO<EmpresaDTO> pagina = new PaginacaoDTO<>(pageDict.getPageNumber(), pageDict.getPageSize());
+        PaginacaoDTO<EmpresaDTO> pagina = new PaginacaoDTO<>(pageNumber, pageSize);
         pagina.setItens(listaDeDTOS);
-        pagina.setTotalResults(empresaService.getTotalItems(pageDict.getSearchName()));
+        pagina.setTotalResults(empresaService.getTotalItems(searchName));
         return Response.status(Response.Status.OK).entity(pagina).build();
     }
 

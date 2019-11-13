@@ -23,15 +23,15 @@ public class ProdutoEndPointImpl implements ProdutoEndPoint {
     private CategoriaService categoriaService;
 
     @Override
-    public Response listar(PageDict pageDict) {
+    public Response listar(int pageNumber, int pageSize, String searchName) {
         List<ProdutoDTO> listaDeDTOS = new ArrayList<>();
-        for(Produto i: produtoService.listar(pageDict.getPageNumber(), pageDict.getPageSize(), pageDict.getSearchName())){
+        for(Produto i: produtoService.listar(pageNumber, pageSize, searchName)){
             listaDeDTOS.add(this.toDTO(i));
         }
 
-        PaginacaoDTO<ProdutoDTO> pagina = new PaginacaoDTO<>(pageDict.getPageNumber(), pageDict.getPageSize());
+        PaginacaoDTO<ProdutoDTO> pagina = new PaginacaoDTO<>(pageNumber, pageSize);
         pagina.setItens(listaDeDTOS);
-        pagina.setTotalResults(produtoService.getTotalItems(pageDict.getSearchName()));
+        pagina.setTotalResults(produtoService.getTotalItems(searchName));
         return Response.status(Response.Status.OK).entity(pagina).build();
     }
 

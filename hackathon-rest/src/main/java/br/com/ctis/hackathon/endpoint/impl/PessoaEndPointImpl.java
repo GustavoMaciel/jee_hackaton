@@ -25,15 +25,15 @@ public class PessoaEndPointImpl implements PessoaEndPoint {
     private TelefoneService telefoneService;
 
     @Override
-    public Response listar(PageDict pageDict) {
+    public Response listar(int pageNumber, int pageSize, String searchName) {
         List<PessoaDTO> listaDeDTOS = new ArrayList<>();
-        for(Pessoa i: pessoaService.listar(pageDict.getPageNumber(), pageDict.getPageSize(), pageDict.getSearchName())){
+        for(Pessoa i: pessoaService.listar(pageNumber, pageSize, searchName)){
             listaDeDTOS.add(this.toDTO(i));
         }
 
-        PaginacaoDTO<PessoaDTO> pagina = new PaginacaoDTO<>(pageDict.getPageNumber(), pageDict.getPageSize());
+        PaginacaoDTO<PessoaDTO> pagina = new PaginacaoDTO<>(pageNumber, pageSize);
         pagina.setItens(listaDeDTOS);
-        pagina.setTotalResults(pessoaService.getTotalItems(pageDict.getSearchName()));
+        pagina.setTotalResults(pessoaService.getTotalItems(searchName));
         return Response.status(Response.Status.OK).entity(pagina).build();
     }
 

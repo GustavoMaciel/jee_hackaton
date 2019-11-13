@@ -30,11 +30,8 @@ public interface ProdutoEndPoint {
                     @ApiResponse(responseCode = "500", description = "Internal Server Error")
             }
     )
-    Response listar(@RequestBody(
-            description = "Informações de tamanho de página e busca",
-            required = true,
-            content = @Content(schema = @Schema(implementation = PageDict.class))) @Valid PageDict pageDict
-    );
+    Response listar(@QueryParam("pageNumber") @Valid int pageNumber, @QueryParam("pageSize") @Valid int pageSize,
+                    @QueryParam("searchName") @Valid String searchName);
 
     @POST
     @Consumes("application/json")
