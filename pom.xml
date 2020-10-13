@@ -18,7 +18,7 @@
 		<version.surefire.plugin>2.22.0</version.surefire.plugin>
 		<version.plugin.compiler>3.8.0</version.plugin.compiler>
 		<version.plugin.war>3.2.2</version.plugin.war>
-		<version.junit>4.12</version.junit>
+		<version.junit>4.13.1</version.junit>
 		<version.mockito>1.10.19</version.mockito>
 		<target>default</target>
 	</properties>
