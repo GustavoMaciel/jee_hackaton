@@ -11,7 +11,7 @@
 	</parent>
 
 	<properties>
-		<version.hibernate>5.4.0.Final</version.hibernate>
+		<version.hibernate>5.4.24.Final</version.hibernate>
 	</properties>
 
 	<artifactId>hackathon-persistence</artifactId>
